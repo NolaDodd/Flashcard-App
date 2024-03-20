@@ -72,94 +72,58 @@ function AddEditCard() {
         loadDeck();
         return () => abortController.abort();
     }, [deckId]);
+    
+    const formTitle = location.pathname.includes("edit") ? "Edit Card" : "Add Card";
+    const submitButtonLabel = location.pathname.includes("edit") ? "Submit" : "Save";
+    const handleSubmitForm = location.pathname.includes("edit") ? handleEdit : handleSubmit;
 
-    const addNewCardForm = (
-    <div>
-       <h3>{deckName}: Add Card</h3>
-        <form onSubmit={handleSubmit}>
-            <label htmlFor="front">
-                Front    
-                <br />
-                <textarea
-                    id="front"
-                    type="text"
-                    name="front"
-                    onChange={handleChange}
-                    value={formData.front}
-                    placeholder="Card Front"
-                >
-                    </textarea>
-            </label>
-            <br/>
-            <label htmlFor="back">
-                Back
-                <br />
-
-                <textarea 
-                id="back" 
-                name="back"
-                placeholder="Card Back"
-                onChange={handleChange}
-                value={formData.back}
-                >
-                </textarea>
-            </label>
-            <br/>
-            <Link to={`/decks/${deckId}`} className= "btn btn-secondary">Done</Link>
-            <button type="submit" className="btn btn-primary">Save</button>
-        </form>
-    </div> )
-
-    const editCardForm = (
-    <div>            
-        <h3>Edit Card</h3>
-            <form onSubmit={handleEdit}>
-                <label htmlFor="front">
-                    Front:
-                    <br />
-                    <textarea 
-                    id="front" 
-                    name="front"
-                    onChange={handleChange}
-                    value={formData.front}
-                    >
-                    </textarea>
-                </label>
-                <br/>
-                <label htmlFor="back">
-                    Back:
-                    <br />
-                    <textarea 
-                    id="back" 
-                    name="back"
-                    onChange={handleChange}
-                    value={formData.back}
-                    >
-                    </textarea>
-                </label>
-                <br/>
-                <Link to={`/decks/${deckId}`} className= "btn btn-secondary">Cancel</Link>
-                <button type="submit" className= "btn btn-primary">Submit</button>
-            </form>
-    </div>
-)
     return (
-    <>
-    <nav aria-label="breadcrumb">
-        <ol className="breadcrumb">
-            <li className="breadcrumb-item"><Link to="/">Home</Link></li>
-            {location.pathname.includes("new") ?  
-            <li className="breadcrumb-item"><Link to={`/decks/${deckId}`}>{deckName}</Link></li>
-                : null }
-            <li className="breadcrumb-item active" aria-current="page">
-                {location.pathname.includes("edit") ? "Edit Card" : "Add Card"}
-            </li>
-        </ol>
-    </nav>
-    {location.pathname.includes("edit") ? editCardForm : addNewCardForm}
-    </>
-
-    )
+        <>
+            <nav aria-label="breadcrumb">
+                <ol className="breadcrumb">
+                    <li className="breadcrumb-item"><Link to="/">Home</Link></li>
+                    {location.pathname.includes("new") ?  
+                    <li className="breadcrumb-item"><Link to={`/decks/${deckId}`}>{deckName}</Link></li>
+                        : null }
+                    <li className="breadcrumb-item active" aria-current="page">
+                        {formTitle}
+                    </li>
+                </ol>
+            </nav>
+            <div>
+                <h3>{formTitle}</h3>
+                <form onSubmit={handleSubmitForm}>
+                    <label htmlFor="front">
+                        Front
+                        <br />
+                        <textarea
+                            id="front"
+                            type="text"
+                            name="front"
+                            onChange={handleChange}
+                            value={formData.front}
+                            placeholder="Card Front"
+                        />
+                    </label>
+                    <br/>
+                    <label htmlFor="back">
+                        Back
+                        <br />
+                        <textarea 
+                            id="back" 
+                            name="back"
+                            placeholder="Card Back"
+                            onChange={handleChange}
+                            value={formData.back}
+                        />
+                    </label>
+                    <br/>
+                    <Link to={`/decks/${deckId}`} className= "btn btn-secondary">Done</Link>
+                    <button type="submit" className="btn btn-primary">{submitButtonLabel}</button>
+                </form>
+            </div>
+        </>
+    );
 }
 
-export default AddEditCard
+export default AddEditCard;
