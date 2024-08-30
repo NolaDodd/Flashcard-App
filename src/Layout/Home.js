@@ -39,6 +39,7 @@ function Home({decks}) {
             <Link to="/decks/new" className="btn btn-secondary">+ Create Deck</Link>
         </div>
         <br />
+        {deckItems.length === 0 ? <p><b>"Loading..."</b></p> : null}
          <ul>{deckItems}</ul>
     </>
     )
